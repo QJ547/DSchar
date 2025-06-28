@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demon Slayer Characters</title>
+  <style>
+   :root {
+   /* Make the banner color (#4d3636) 70% transparent */
+    --primary-color: #4d3636;
+      --secondary-color: rgba(77, 54, 54, 0.3);
+      --hover-name-color: #de2e1b; /*red*/
+      --background-color: #de2e1b; /*red*/
+      --card-color: #e8e8e8; /*white*/
+      --text-color: #ecf0f1; /*white*/
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+
+      /* title colors */
+      --title-accent-color: #E74C3C;
+      --title-normal-color: #FFFFFF;
+    }
+     .page-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin: 1.5rem 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+    .title-accent { color: var(--title-accent-color); }
+    .title-normal { color: var(--title-normal-color); }
+
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background-color) url('https://i.imgur.com/z8Erz8m.jpeg') center/cover no-repeat;
+      color: var(--text-color);
+      margin: 0;
+    }
+    .app { display: flex; flex-direction: column; min-height: 100vh; }
+    .header { background: var(--secondary-color); color: #fff; text-align: center; padding: 1.5rem; box-shadow: var(--shadow); }
+    .tabs { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+    .tab {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+      padding: 0.5rem 1.5rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .tab.active { background: var(--primary-color); border-color: var(--primary-color); }
+    .tab:hover { background: rgba(255,255,255,0.1); }
+    .main-content { flex: 1; padding: 2rem; }
+    .character-grid { display: flex; flex-direction: column; gap: 2rem; align-items: center; }
+    .character-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+    .character-card {
+      background: var(--card-color);
+      width: 180px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      text-align: center;
+      transform: translateX(-200px);
+      animation: slideIn 0.4s ease-out forwards;
+      transition: var(--transition);
+    }
+    @keyframes slideIn { from { transform: translateX(-200px); } to { transform: translateX(0); } }
+    .character-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    .character-card:hover h3 { color: var(--hover-name-color); }
+    .character-image { width: 136px; height: 136px; border-radius: var(--border-radius); object-fit: cover; border: 2px solid #eee; margin-bottom: 0.5rem; }
+    .character-card h3 { color: var(--secondary-color); font-size: 1rem; margin: 0.5rem 0; }
+    .character-japanese { color: var(--primary-color); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    @media(max-width:768px) {
+      .character-card { width: 140px; }
+      .character-image { width: 110px; height: 110px; }
+    }
+    @media(max-width:480px) {
+      .tabs { flex-direction: column; }
+      .character-card { width: 120px; }
+      .character-image { width: 90px; height: 90px; }
+    }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-overlay.active { display: flex; }
+    .modal-content { background: var(--card-color); color: var(--text-color); border-radius: var(--border-radius); max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; padding: 2rem; }
+    .close-button { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--secondary-color); }
+    .modal-header { display: flex; align-items: center; margin-bottom: 2rem; }
+    .modal-image-container { width: 150px; height: 150px; border-radius: var(--border-radius); overflow: hidden; margin-right: 1.5rem; flex-shrink: 0; }
+    .modal-image { width: 100%; height: 100%; object-fit: cover; }
+    .modal-title h2 { margin-bottom: 0.5rem; color: var(--secondary-color); }
+    .modal-body p, .modal-body ul { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+    <h1 class="page-title">
+    <span class="title-accent">Demon Slayer</span>
+    <span class="title-normal">Characters</span>
+  </h1>
+      <div class="tabs">
+        <button class="tab active" data-target="hashiras">Hashiras</button>
+        <button class="tab" data-target="demon-slayers">Demon Slayers</button>
+        <button class="tab" data-target="demons">Demons</button>
+      </div>
+    </header>
+    <main class="main-content">
+      <section id="hashiras-content" class="tab-content active">
+        <div class="character-grid">
+          <!-- First row of Hashiras -->
+          <div class="character-row">
+            <div class="character-card"><img src="images/giyuu.jpg" class="character-image" alt="Giyuu"><h3>Giyuu Tomioka</h3><p class="character-japanese">冨岡 義勇</p></div>
+            <div class="character-card"><img src="images/mitsuri.jpg" class="character-image" alt="Mitsuri"><h3>Mitsuri Kanroji</h3><p class="character-japanese">甘露寺 蜜璃</p></div>
+            <div class="character-card"><img src="images/shinobu.jpg" class="character-image" alt="Shinobu"><h3>Shinobu Kocho</h3><p class="character-japanese">胡蝶 しのぶ</p></div>
+            <div class="character-card"><img src="images/muichiro.jpg" class="character-image" alt="Muichiro"><h3>Muichiro Tokito</h3><p class="character-japanese">時透 無一郎</p></div>
+            <div class="character-card"><img src="images/tengen.jpg" class="character-image" alt="Tengen"><h3>Tengen Uzui</h3><p class="character-japanese">宇髄 天元</p></div>
+          </div>
+          <!-- Second row of Hashiras -->
+          <div class="character-row">
+            <div class="character-card"><img src="images/gyomei.jpg" class="character-image" alt="Gyomei"><h3>Gyomei Himejima</h3><p class="character-japanese">悲鳴嶼 行冥</p></div>
+            <div class="character-card"><img src="images/sanemi.jpg" class="character-image" alt="Sanemi"><h3>Sanemi Shinazugawa</h3><p class="character-japanese">不死川 実弥</p></div>
+            <div class="character-card"><img src="images/obanai.jpg" class="character-image" 
+alt="Obanai"><h3>Obanai Iguro</h3><p class="character-japanese">伊黒 小芭内</p></div>
+            <div class="character-card"><img src="images/rengoku.jpg" class="character-image" alt="Rengoku"><h3>Kyojuro Rengoku</h3><p class="character-japanese">煉獄 杏寿郎</p></div>
+            <div class="character-card"><img src="images/yoriichi.jpg" class="character-image" alt="Yoriichi"><h3>Yoriichi Tsugikuni</h3><p class="character-japanese">継国 縁壱</p></div>
+            <div class="character-card"><img src="images/kanae.jpg" class="character-image" alt="Kanae"><h3>Kanae Kocho</h3><p class="character-japanese">胡蝶 カナエ</p></div>
+          </div>
+        </div>
+      </section>
+      <section id="demon-slayers-content" class="tab-content">
+        <div class="character-grid">
+          <div class="character-row">
+            <div class="character-card"><img src="images/tanjiro.jpg" class="character-image" alt="Tanjiro"><h3>Tanjiro Kamado</h3><p class="character-japanese">竈門 炭治郎</p></div>
+            <div class="character-card"><img src="images/kanao.jpg" class="character-image" alt="Kanao"><h3>Kanao Tsuyuri</h3><p class="character-japanese">栗花落 カナヲ</p></div>
+            <div class="character-card"><img src="images/zenitsu.jpg" class="character-image" alt="Zenitsu"><h3>Zenitsu Agatsuma</h3><p class="character-japanese">我妻 善逸</p></div>
+            <div class="character-card"><img src="images/inosuke.jpg" class="character-image" alt="Inosuke"><h3>Inosuke Hashibira</h3><p class="character-japanese">嘴平 伊之助</p></div>
+            <div class="character-card"><img src="images/genya.jpg" class="character-image" alt="Genya"><h3>Genya Shinazugawa</h3><p class="character-japanese">不死川 玄弥</p></div>
+          </div>
+        </div>
+      </section>
+      <section id="demons-content" class="tab-content">
+        <div class="character-grid">
+          <!-- First row of Demons -->
+          <div class="character-row">
+            <div class="character-card"><img src="images/nezuko.jpg" class="character-image" alt="Nezuko"><h3>Nezuko Kamado</h3><p class="character-japanese">竈門 禰豆子</p></div>
+            <div class="character-card"><img src="images/muzan.jpg" class="character-image" alt="Muzan"><h3>Muzan Kibutsuji</h3><p class="character-japanese">鬼舞辻 無惨</p></div>
+            <div class="character-card"><img src="images/kokushibo.jpg" class="character-image" alt="Kokushibo"><h3>Kokushibo</h3><p class="character-japanese">黒死牟</p></div>
+            <div class="character-card"><img src="images/doma.jpg" class="character-image" alt="Doma"><h3>Doma</h3><p class="character-japanese">童磨</p></div>
+            <div class="character-card"><img src="images/akaza.jpg" class="character-image" alt="Akaza"><h3>Akaza</h3><p class="character-japanese">猗窩座</p></div>
+          </div>
+          <!-- Second row of Demons -->
+          <div class="character-row">
+            <div class="character-card"><img src="images/nakime.jpg" class="character-image" alt="Nakime"><h3>Nakime</h3><p class="character-japanese">鍵目</p></div>
+            <div class="character-card"><img src="images/hantengu.jpg" class="character-image" alt="Hantengu"><h3>Hantengu</h3><p class="character-japanese">半天狗</p></div>
+            <div class="character-card"><img src="images/gyokko.jpg" class="character-image" alt="Gyokko"><h3>Gyokko</h3><p class="character-japanese">玉壺</p></div>
+            <div class="character-card"><img src="images/gyutaro.jpg" class="character-image" alt="Gyutaro"><h3>Gyutaro</h3><p class="character-japanese">妓夫太郎</p></div>
+            <div class="character-card"><img src="images/daki.jpg" class="character-image" alt="Daki"><h3>Daki</h3><p class="character-japanese">堕姫</p></div>
+          </div>
+          <!-- Third row of Demons -->
+          <div class="character-row">
+            <div class="character-card"><img src="images/kaigaku.jpg" class="character-image" alt="Kaigaku"><h3>Kaigaku</h3><p class="character-japanese">獪岳</p></div>
+            <div class="character-card"><img src="images/tamayo.jpg" class="character-image" alt="Tamayo"><h3>Tamayo</h3><p class="character-japanese">珠世</p></div>
+            <div class="character-card"><img src="images/yushiro.jpg" class="character-image" alt="Yushiro"><h3>Yushiro</h3><p class="character-japanese">愈史郎</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+ <!-- Giyuu Modal -->
+  <div id="giyuu-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-button" onclick="closeModal('giyuu')">×</button>
+      <div class="modal-header">
+        <div class="modal-image-container"><img src="images/giyuu_full.jpg" class="modal-image" alt="Giyu"></div>
+        <div class="modal-title">
+          <h2>Giyu Tomioka</h2>
+          <p>冨岡 義勇</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p><strong>Giyu Tomioka (冨岡義勇)</strong> is a Demon Slayer of the Corps and the Water Hashira of the Taishō era.</p>
+        <p><strong>Age:</strong> 21</p>
+        <p><strong>Status:</strong> Human</p>
+        <h3>Breathing Style:</h3>
+        <p><strong>Water Breathing (水の呼吸 Mizu no kokyū):</strong></p>
+        <ul>
+          <li><strong>First Form:</strong> Water Surface Slash</li>
+          <li><strong>Second Form:</strong> Water Wheel</li>
+          <li><strong>Third Form:</strong> Flowing Dance</li>
+          <li><strong>Fourth Form:</strong> Striking Tide</li>
+          <li><strong>Fifth Form:</strong> Blessed Rain After the Drought</li>
+          <li><strong>Sixth Form:</strong> Whirlpool</li>
+          <li><strong>Seventh Form:</strong> Drop Ripple Thrust</li>
+          <li><strong>Eighth Form:</strong> Waterfall Basin</li>
+          <li><strong>Ninth Form:</strong> Splashing Water Flow</li>
+          <li><strong>Tenth Form:</strong> Constant Flux</li>
+          <li><strong>Eleventh Form:</strong> Dead Calm</li>
+        </ul>
+        <h3>Relations:</h3>
+        <p>Tsutako Tomioka (older sister), Sakonji Urokodaki (mentor), <span class="relation-link" onclick="switchModal('giyuu','tanjiro')">Tanjiro Kamado</span> (ally)</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // deactivate all tabs and contents
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        // activate clicked tab
+        tab.classList.add('active');
+        // show target content
+        const target = tab.getAttribute('data-target');
+        const content = document.getElementById(`${target}-content`);
+        if (content) content.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
